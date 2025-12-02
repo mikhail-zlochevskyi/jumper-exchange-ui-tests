@@ -1,0 +1,53 @@
+{
+  "name": "jumper-exchange-ui-tests",
+  "version": "1.0.0",
+  "description": "Comprehensive UI automation test suite for Jumper Exchange using Playwright with Page Object Model (POM) pattern",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "test:swap": "playwright test tests/swap.spec.ts",
+    "test:bridge": "playwright test tests/bridge.spec.ts",
+    "test:wallet": "playwright test tests/wallet.spec.ts",
+    "report": "playwright show-report",
+    "codegen": "playwright codegen https://jumper.exchange",
+    "lint": "tsc --noEmit"
+  },
+  "keywords": [
+    "playwright",
+    "automation",
+    "testing",
+    "ui-testing",
+    "jumper-exchange",
+    "crypto",
+    "blockchain",
+    "page-object-model",
+    "pom"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/jumper-exchange-ui-tests.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/jumper-exchange-ui-tests/issues"
+  },
+  "homepage": "https://github.com/yourusername/jumper-exchange-ui-tests#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^20.10.0",
+    "dotenv": "^17.2.3",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
