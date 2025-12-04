@@ -1,38 +1,29 @@
 # Jumper Exchange UI Tests
 
-Comprehensive UI automation test suite for Jumper Exchange using Playwright with Page Object Model (POM) pattern.
+UI automation test suite for **Jumper Exchange** using **Playwright** + **TypeScript** + **Page Object Model (POM)**.
 
 ## Overview
 
-This project provides automated UI testing for the Jumper Exchange platform, which enables clients to swap or bridge crypto assets across dozens of blockchains.
+This repository contains Playwright UI tests for the Jumper Exchange platform, which enables users to swap and bridge crypto assets across multiple blockchains. The tests focus on core navigation, wallet setup UI, and menu interactions.
 
-## Features
+**App**: https://jumper.exchange  
+**Docs**: https://docs.li.fi/api-reference/introduction
 
-- **Page Object Model (POM)** - Maintainable and scalable test structure
-- **Multiple Test Scenarios** - Swap, bridge, wallet connection, and more
-- **Cross-browser Testing** - Chromium, Firefox, and WebKit
-- **Comprehensive Reporting** - HTML, JSON, and JUnit reports
-- **CI/CD Ready** - GitHub Actions integration
-- **Screenshot & Video Capture** - On failure for debugging
+## Stack
 
-## Project Structure
+- **Node.js** (>=18.0.0)
+- **TypeScript** (^5.3.3)
+- **Playwright** (^1.57.0)
+- **Page Object Model (POM)** pattern
 
-```
-jumper-exchange-ui-tests/
-├── tests/
-│   ├── pages/              # Page Object Models
-│   ├── components/         # Reusable component models
-│   ├── scenarios/          # Test scenarios
-│   └── *.spec.ts          # Test files
-├── utils/                  # Utility functions
-├── config/                 # Configuration files
-├── reports/                # Test reports (generated)
-├── playwright.config.ts    # Playwright configuration
-├── .env.example           # Environment variables template
-└── package.json           # Dependencies
-```
+## Setup
 
-## Installation
+### Prerequisites
+
+- Node.js >= 18.0.0
+- npm >= 9.0.0
+
+### Installation
 
 1. Clone the repository:
 ```bash
@@ -45,22 +36,20 @@ cd jumper-exchange-ui-tests
 npm install
 ```
 
-3. Configure environment variables:
+3. Install Playwright browsers:
 ```bash
-cp .env.example .env
-# Edit .env with your configuration
+npx playwright install chromium
 ```
 
-## Configuration
+### Environment Variables (Optional)
 
-Create a `.env` file based on `.env.example`:
+Create a `.env` file to override the default base URL:
 
 ```env
-BASE_URL=https://jumper.exchange
-TEST_USER_EMAIL=your_email@example.com
-TEST_USER_PASSWORD=your_password
-HEADLESS=true
+APP_BASE_URL=https://jumper.exchange
 ```
+
+If not set, defaults to `https://jumper.exchange`.
 
 ## Running Tests
 
@@ -71,114 +60,163 @@ npm test
 
 ### Run specific test file
 ```bash
-npx playwright test tests/swap.spec.ts
+npm run test:wallet          # Wallet setup tests
+npm run test:navigation      # Navigation tests
+npm run test:menu            # Menu navigation tests
+
+# Or directly with Playwright
+npx playwright test tests/ui/walletSetup.spec.ts
 ```
 
-### Run tests in headed mode (see browser)
+### Run in headed mode (see browser)
 ```bash
-npx playwright test --headed
+npm run test:headed
 ```
 
-### Run tests in debug mode
+### Run in debug mode
 ```bash
-npx playwright test --debug
+npm run test:debug
 ```
 
-### Run tests with specific browser
+### Run with UI mode
 ```bash
-npx playwright test --project=chromium
-npx playwright test --project=firefox
-npx playwright test --project=webkit
+npm run test:ui
 ```
 
-### Generate test report
+## Reports
+
+### View HTML report
 ```bash
-npx playwright show-report
+npm run report
 ```
 
-## Test Scenarios
+This opens the Playwright HTML report in your browser, showing test results, screenshots, videos, and traces.
 
-### 1. Swap Functionality
-- Connect wallet
-- Select source and destination tokens
-- Enter swap amount
-- Verify quote
-- Execute swap
+Reports are generated in `reports/html/` directory.
 
-### 2. Bridge Functionality
-- Select source and destination chains
-- Choose tokens to bridge
-- Verify bridge fee
-- Execute bridge transaction
+## Project Structure
 
-### 3. Wallet Connection
-- Connect MetaMask/WalletConnect
-- Verify wallet address display
-- Disconnect wallet
+```
+jumper-exchange-ui-tests/
+├── docs/
+│   └── TEST_PLAN_UI.md          # Comprehensive test plan
+├── src/
+│   ├── config/
+│   │   └── env.ts               # Environment configuration
+│   ├── pages/
+│   │   ├── BasePage.ts          # Base page object with common methods
+│   │   ├── HomePage.ts          # Home page object
+│   │   ├── Header.ts            # Header/navigation bar object
+│   │   ├── MenuDrawer.ts        # Menu drawer object
+│   │   ├── LearnPage.ts         # Learn page object
+│   │   └── DiscordPage.ts       # Discord page object
+│   └── helpers/
+│       └── assertions.ts        # Custom assertion helpers
+├── tests/
+│   └── ui/
+│       ├── walletSetup.spec.ts  # Wallet setup tests
+│       ├── navigation.spec.ts  # Navigation tests
+│       └── menu.spec.ts         # Menu navigation tests
+├── .github/
+│   └── workflows/
+│       └── ui-ci.yml           # GitHub Actions CI workflow
+├── playwright.config.ts        # Playwright configuration
+├── tsconfig.json               # TypeScript configuration
+└── package.json                # Dependencies and scripts
+```
 
-### 4. Token Search & Selection
-- Search for tokens
-- Filter by chain
-- Verify token details
+## Test Coverage
 
-### 5. Transaction History
-- View recent transactions
-- Filter transactions
-- Verify transaction status
+### Wallet Setup (UI Level)
+- ✅ Connect Wallet button visibility
+- ✅ Wallet modal opens on click
+- ✅ Wallet provider options displayed
+- ✅ Modal close functionality
 
-## Page Object Models
+### Navigation
+- ✅ Default tab content visible
+- ✅ Tab switching (Swap / Bridge / History)
+- ✅ Tab active state validation
+- ✅ Header elements visibility
 
-### BasePage
-Base class for all page objects with common methods:
-- Navigation
-- Element interactions
-- Waits and assertions
+### Menu Navigation
+- ✅ Menu drawer opens/closes
+- ✅ Navigate to Learn page
+- ✅ Navigate to Discord (external link)
+- ✅ URL pattern validation
 
-### HomePage
-- Navigation elements
-- Feature highlights
-- CTA buttons
+## Assumptions & Limitations
 
-### SwapPage
-- Token selection
-- Amount input
-- Quote display
-- Swap execution
+### Wallet Setup Limitation
 
-### BridgePage
-- Chain selection
-- Token selection
-- Bridge execution
+**Important**: Tests do **not** perform real wallet connections or blockchain transactions. The wallet setup tests validate:
 
-### WalletPage
-- Wallet connection
-- Account display
-- Disconnect functionality
+- UI elements (button visibility, clickability)
+- Modal behavior (open, close, provider list display)
+- User interface flow up to the point of actual wallet connection
 
-## CI/CD Integration
+This limitation is documented in both the test plan (`docs/TEST_PLAN_UI.md`) and this README to set proper expectations.
+
+### Other Limitations
+
+- Tests run on **Chromium only** (Firefox/WebKit are future scope)
+- **Desktop viewport only** (mobile viewports are future scope)
+- No real on-chain swaps or transactions
+- No visual regression testing (future scope)
+
+## Future Improvements
+
+1. **Cross-browser testing**
+   - Add Firefox and WebKit projects
+   - Validate consistency across browsers
+
+2. **Mobile viewports**
+   - Add mobile-specific test scenarios
+   - Test responsive design behavior
+
+3. **Visual regression**
+   - Integrate screenshot comparison
+   - Detect UI changes automatically
+
+4. **Extended flows**
+   - Swap flow (with mocked API)
+   - Bridge flow (with mocked API)
+   - Transaction history validation
+   - Settings page navigation
+
+5. **Performance testing**
+   - Page load times
+   - API response times
+   - Network waterfall analysis
+
+6. **Accessibility testing**
+   - ARIA labels validation
+   - Keyboard navigation
+   - Screen reader compatibility
+
+## CI/CD
 
 ### GitHub Actions
+
 Tests run automatically on:
-- Push to main/develop branches
-- Pull requests
-- Scheduled daily runs
+- Push to `main` or `develop` branches
+- Pull requests to `main` or `develop`
 
-See `.github/workflows/` for configuration.
+The CI workflow:
+1. Checks out code
+2. Sets up Node.js 20
+3. Installs dependencies
+4. Installs Playwright browsers
+5. Runs tests
+6. Uploads HTML report as artifact
 
-## Best Practices
-
-1. **Use Page Object Model** - Keep selectors in page objects
-2. **Meaningful Test Names** - Describe what is being tested
-3. **Avoid Hard Waits** - Use Playwright's built-in waits
-4. **Data-driven Tests** - Use test data fixtures
-5. **Clean Up** - Reset state between tests
-6. **Assertions** - Use specific, meaningful assertions
+See `.github/workflows/ui-ci.yml` for configuration.
 
 ## Debugging
 
 ### View test execution
 ```bash
-npx playwright test --headed --debug
+npm run test:headed -- --debug
 ```
 
 ### Generate trace
@@ -191,29 +229,36 @@ npx playwright test --trace on
 npx playwright show-trace trace.zip
 ```
 
-## Contributing
+### Codegen (generate selectors)
+```bash
+npm run codegen
+```
 
-1. Create a feature branch
-2. Add tests for new features
-3. Ensure all tests pass
-4. Submit a pull request
+This opens Playwright's codegen tool to interact with the app and generate selectors.
 
 ## Troubleshooting
 
 ### Tests timeout
 - Increase timeout in `playwright.config.ts`
 - Check network connectivity
-- Verify BASE_URL is correct
+- Verify `APP_BASE_URL` is correct
 
 ### Selectors not found
-- Update selectors in page objects
-- Use `npx playwright codegen` to generate selectors
+- Use `npm run codegen` to generate new selectors
 - Check if elements are in iframe
+- Update selectors in page objects
 
 ### Flaky tests
 - Add explicit waits for dynamic content
 - Use `waitForLoadState()`
-- Increase retry count
+- Increase retry count in CI
+
+## Contributing
+
+1. Create a feature branch
+2. Add tests for new features
+3. Ensure all tests pass
+4. Submit a pull request
 
 ## License
 

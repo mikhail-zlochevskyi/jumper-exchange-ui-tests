@@ -1,7 +1,7 @@
 {
   "name": "jumper-exchange-ui-tests",
   "version": "1.0.0",
-  "description": "Comprehensive UI automation test suite for Jumper Exchange using Playwright with Page Object Model (POM) pattern",
+  "description": "UI automation test suite for Jumper Exchange using Playwright + TypeScript + Page Object Model",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -9,15 +9,15 @@
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
     "test:ui": "playwright test --ui",
-    "test:chromium": "playwright test --project=chromium",
-    "test:firefox": "playwright test --project=firefox",
-    "test:webkit": "playwright test --project=webkit",
-    "test:swap": "playwright test tests/swap.spec.ts",
-    "test:bridge": "playwright test tests/bridge.spec.ts",
-    "test:wallet": "playwright test tests/wallet.spec.ts",
-    "report": "playwright show-report",
+    "test:wallet": "playwright test tests/ui/walletSetup.spec.ts",
+    "test:navigation": "playwright test tests/ui/navigation.spec.ts",
+    "test:menu": "playwright test tests/ui/menu.spec.ts",
+    "report": "playwright show-report reports/html",
     "codegen": "playwright codegen https://jumper.exchange",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "clean:reports": "rm -rf reports",
+    "clean:results": "rm -rf test-results",
+    "clean": "npm run clean:reports && npm run clean:results"
   },
   "keywords": [
     "playwright",
@@ -25,7 +25,6 @@
     "testing",
     "ui-testing",
     "jumper-exchange",
-    "crypto",
     "blockchain",
     "page-object-model",
     "pom"
@@ -43,7 +42,6 @@
   "devDependencies": {
     "@playwright/test": "^1.57.0",
     "@types/node": "^20.10.0",
-    "dotenv": "^17.2.3",
     "typescript": "^5.3.3"
   },
   "engines": {
