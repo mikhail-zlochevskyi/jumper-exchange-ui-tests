@@ -26,11 +26,11 @@ export class Header extends BasePage {
    */
   async waitForHeader(): Promise<void> {
     // Wait for exchange button as it's a key navigation element
+    // Use a short timeout and don't fail if not found immediately
     try {
-      await this.waitForElement(this.exchangeButton, 5000);
-    } catch (e) {
-      // If not found, just wait a bit for page to stabilize
-      await this.page.waitForTimeout(1000);
+      await this.exchangeButton.waitFor({ state: 'visible', timeout: 5000 });
+    } catch {
+      // Header might not be immediately available, that's okay
     }
   }
 

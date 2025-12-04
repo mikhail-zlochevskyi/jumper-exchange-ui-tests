@@ -109,9 +109,8 @@ jumper-exchange-ui-tests/
 │   │   ├── Header.ts            # Header/navigation bar object
 │   │   ├── MenuDrawer.ts        # Menu drawer object
 │   │   ├── LearnPage.ts         # Learn page object
-│   │   └── DiscordPage.ts       # Discord page object
-│   └── helpers/
-│       └── assertions.ts        # Custom assertion helpers
+│   │   ├── DiscordPage.ts       # Discord page object
+│   │   └── WalletModal.ts      # Wallet modal object
 ├── tests/
 │   └── ui/
 │       ├── walletSetup.spec.ts  # Wallet setup tests
@@ -119,7 +118,7 @@ jumper-exchange-ui-tests/
 │       └── menu.spec.ts         # Menu navigation tests
 ├── .github/
 │   └── workflows/
-│       └── ui-ci.yml           # GitHub Actions CI workflow
+│       └── ci.yml              # GitHub Actions CI workflow
 ├── playwright.config.ts        # Playwright configuration
 ├── tsconfig.json               # TypeScript configuration
 └── package.json                # Dependencies and scripts
@@ -134,9 +133,8 @@ jumper-exchange-ui-tests/
 - ✅ Modal close functionality
 
 ### Navigation
-- ✅ Default tab content visible
-- ✅ Tab switching (Swap / Bridge / History)
-- ✅ Tab active state validation
+- ✅ Home page content loads
+- ✅ Exchange and Missions button clicks
 - ✅ Header elements visibility
 
 ### Menu Navigation
@@ -210,7 +208,7 @@ The CI workflow:
 5. Runs tests
 6. Uploads HTML report as artifact
 
-See `.github/workflows/ui-ci.yml` for configuration.
+See `.github/workflows/ci.yml` for configuration.
 
 ## Debugging
 

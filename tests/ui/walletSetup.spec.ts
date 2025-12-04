@@ -64,10 +64,11 @@ test.describe('Wallet Setup', () => {
 
     // Click outside modal (on backdrop or body)
     await page.click('body', { position: { x: 10, y: 10 } });
-    await page.waitForTimeout(1000);
+    
+    // Wait briefly to see if modal closes
+    await page.waitForTimeout(500);
 
-    // Verify modal is closed (may not work if backdrop click is disabled)
-    // This test may be flaky depending on UI implementation
+    // Verify modal state (may still be visible if backdrop click doesn't close)
     const isVisible = await homePage.walletModal.isVisible();
     // If backdrop click doesn't close, that's acceptable - UI may require explicit close
     // Just verify we can check the state without errors

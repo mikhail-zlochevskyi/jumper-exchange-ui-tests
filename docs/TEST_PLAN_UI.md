@@ -9,10 +9,11 @@
    - Validate wallet options list / modal behavior
    - Verify modal close functionality
 
-2. **Navigation through home page and tabs**
-   - Verify default tab content
-   - Switch between tabs (Swap / Bridge / History / etc.)
-   - Validate tab active states and corresponding panel visibility
+2. **Navigation through home page**
+   - Verify home page loads successfully
+   - Click Exchange button (data-testid="navbar-exchange-button")
+   - Click Missions button (data-testid="navbar-missions-button")
+   - Verify buttons are accessible and functional
 
 3. **Menu → "Learn" navigation**
    - Open menu drawer
@@ -79,11 +80,9 @@
 | TC-002 | Wallet provider options displayed | Wallet modal open | 1. Verify modal is visible<br>2. Check for at least one provider (MetaMask, WalletConnect, etc.) | At least one wallet provider option is visible | P0 |
 | TC-003 | Wallet modal closes via X button | Wallet modal open | 1. Click close/X button | Modal closes, returns to initial state | P1 |
 | TC-004 | Wallet modal closes via outside click | Wallet modal open | 1. Click outside modal area | Modal closes, returns to initial state | P1 |
-| TC-005 | Default tab content visible | App loaded | 1. Open home page<br>2. Verify default tab (Swap) is active | Default tab content is visible | P0 |
-| TC-006 | Switch to Bridge tab | App loaded | 1. Click Bridge tab<br>2. Verify tab becomes active | Bridge tab active, corresponding panel visible | P0 |
-| TC-007 | Switch to Swap tab | App loaded on Bridge tab | 1. Click Swap tab<br>2. Verify tab becomes active | Swap tab active, corresponding panel visible | P0 |
-| TC-008 | Switch to History tab (if available) | App loaded | 1. Click History tab<br>2. Verify tab becomes active | History tab active, corresponding panel visible | P1 |
-| TC-009 | Only one tab active at a time | App loaded | 1. Switch between tabs<br>2. Verify only clicked tab is active | Only one tab has active state | P1 |
+| TC-005 | Home page loads successfully | App loaded | 1. Open home page<br>2. Verify URL contains jumper.exchange | Home page URL is correct | P0 |
+| TC-006 | Click Exchange button | App loaded | 1. Click Exchange button<br>2. Verify button remains accessible | Exchange button clickable, page doesn't break | P0 |
+| TC-007 | Click Missions button | App loaded | 1. Click Missions button<br>2. Verify button remains accessible | Missions button clickable, page doesn't break | P0 |
 | TC-010 | Menu drawer opens | App loaded | 1. Click menu/burger icon | Menu drawer opens and is visible | P0 |
 | TC-011 | Navigate to Learn via menu | Menu drawer open | 1. Click "Learn" link in menu | Navigates to Learn page/section, URL contains /learn or similar | P0 |
 | TC-012 | Learn page content visible | On Learn page | 1. Verify heading or unique element<br>2. Verify Learn content is displayed | Learn page heading and content are visible | P0 |
@@ -97,6 +96,11 @@
 
 - **Primary**: Chromium (desktop)
 - **Future scope**: Firefox, WebKit, mobile viewports
+
+### Navigation Buttons
+
+- **Exchange**: `data-testid="navbar-exchange-button"`
+- **Missions**: `data-testid="navbar-missions-button"`
 
 ### Viewport
 
@@ -134,7 +138,7 @@
 1. App is publicly accessible at `https://jumper.exchange`
 2. Wallet modal opens without requiring real wallet connection
 3. Menu structure includes Learn and Discord links
-4. Tabs are accessible via standard navigation elements
+4. Exchange and Missions buttons are accessible via `data-testid` attributes
 5. No authentication required for basic navigation tests
 
 ## Execution Strategy

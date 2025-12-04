@@ -32,8 +32,8 @@ test.describe('Home Page Navigation', () => {
     // Click Exchange button
     await header.clickExchange();
     
-    // Wait a bit for any navigation/state change
-    await page.waitForTimeout(1000);
+    // Wait for button to be stable after click
+    await expect(header.exchangeButton).toBeVisible();
     
     // Verify Exchange button is still accessible (page didn't break)
     const isVisible = await header.isExchangeButtonVisible();
@@ -44,8 +44,8 @@ test.describe('Home Page Navigation', () => {
     // Click Missions button
     await header.clickMissions();
     
-    // Wait a bit for any navigation/state change
-    await page.waitForTimeout(1000);
+    // Wait for button to be stable after click
+    await expect(header.missionsButton).toBeVisible();
     
     // Verify Missions button is still accessible (page didn't break)
     const isVisible = await header.isMissionsButtonVisible();

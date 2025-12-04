@@ -41,14 +41,16 @@ export class MenuDrawer extends BasePage {
    */
   async open(): Promise<void> {
     await this.menuButton.click();
-    // Wait a bit for menu to open
-    await this.page.waitForTimeout(500);
     // Wait for menu links to be visible as indicator menu is open
+    // Try Learn link first, then Discord as fallback
     try {
-      await this.learnLink.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
-      await this.discordLink.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
-    } catch (e) {
-      // Menu might be open but links not immediately visible - that's okay
+      await this.learnLink.waitFor({ state: 'visible', timeout: 5000 });
+    } catch {
+      try {
+        await this.discordLink.waitFor({ state: 'visible', timeout: 5000 });
+      } catch {
+        // Menu might be open but links not immediately visible - that's okay
+      }
     }
   }
 

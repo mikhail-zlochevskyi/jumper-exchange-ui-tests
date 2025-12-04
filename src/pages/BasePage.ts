@@ -25,8 +25,12 @@ export class BasePage {
    */
   async waitForPageLoad(): Promise<void> {
     await this.page.waitForLoadState('domcontentloaded');
-    // Wait a bit for dynamic content
-    await this.page.waitForTimeout(2000);
+    // Wait for network to be idle or timeout after 3 seconds
+    try {
+      await this.page.waitForLoadState('networkidle', { timeout: 3000 });
+    } catch {
+      // Network may never be idle, that's okay - page is loaded
+    }
   }
 
   /**

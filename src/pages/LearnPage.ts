@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 /**
@@ -6,8 +6,8 @@ import { BasePage } from './BasePage';
  * Represents the Learn/Documentation section
  */
 export class LearnPage extends BasePage {
-  readonly learnHeading: any;
-  readonly learnContent: any;
+  readonly learnHeading: Locator;
+  readonly learnContent: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -46,7 +46,8 @@ export class LearnPage extends BasePage {
    * Get Learn page heading text
    */
   async getHeadingText(): Promise<string> {
-    return await this.learnHeading.textContent().catch(() => '');
+    const text = await this.learnHeading.textContent().catch(() => null);
+    return text || '';
   }
 
   /**
