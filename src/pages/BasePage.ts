@@ -22,14 +22,17 @@ export class BasePage {
 
   /**
    * Wait for page to load
+   * Waits for DOM to be ready and ensures page is interactive
+   * Uses load state instead of networkidle for better reliability with dynamic SPAs
    */
   async waitForPageLoad(): Promise<void> {
     await this.page.waitForLoadState('domcontentloaded');
-    // Wait for network to be idle or timeout after 3 seconds
+    // Wait for page to be interactive (load event fired)
+    // This is more reliable than networkidle for dynamic SPAs
     try {
-      await this.page.waitForLoadState('networkidle', { timeout: 3000 });
+      await this.page.waitForLoadState('load', { timeout: 5000 });
     } catch {
-      // Network may never be idle, that's okay - page is loaded
+      // Load event may not fire for SPAs, that's okay - domcontentloaded is sufficient
     }
   }
 
